@@ -1,0 +1,76 @@
+include components/mixins
+
+doctype html
+html(lang="uk")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="viewport" content="width=device-width, initial-indicatorScale=1.0")
+    link(rel="stylesheet" href="css/style.css")
+    link(rel="shortcut icon" href="img/logo.ico" type="image/x-icon")
+    link(rel='preconnect' href='https://fonts.googleapis.com')
+    link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin='')
+    link(href='https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap' rel='stylesheet')
+
+  title Automobile 
+  body
+    header 
+      aside 
+        .objects  
+          button(onclick="hideButtons('car', 'player')").player Player 
+          button(onclick="hideButtons('player', 'car')").car Car 
+        .metodes 
+          #player 
+            button(onclick="player.goSleep()")#sleep 1# Sleep
+            button(onclick="player.findWork()")#findWork 2# Job search
+            button(onclick="player.work()")#work 3# Work
+            button(onclick="player.liberationFromWork()")#liberationFromWork 4# liberation from work
+            button(onclick="player.AFOUHelp()")#AFOUDonate 5# Donate for a AFOU
+            button(onclick="player.buyCar()")#buyCar 6# Buy car
+            button(onclick="player.buyMiningFarm() ")#buyMiningFarm 7# Buy mining farm
+            button(onclick="player.sellBitcoin()")#sellBitcoin 8# Sell Bitcoin
+             button(onclick="player.goParty()")#sellBitcoin 9# Go Party
+          #car
+            button(onclick="car.openCar()")#openCar 1# Open car
+            button(onclick="car.closeCar()")#closeCar 2# Close car
+            button(onclick="player.getIntoACar()")#getIntoACar 3# Get into a car
+            button(onclick="player.getOutACar()")#getOutFromCar 4# Get out from car
+            button(onclick="car.insertKey(player)")#insertKey 5# insertKey
+            button(onclick="car.ignitionOn(player)")#ignitionOn 6# IgnitionOn
+            button(onclick="car.startEngine(player)")#startEngine 7# StartEngine
+            button(onclick="car.engineOff(player)")#engineOff 8# Engine Off
+            button(onclick="car.startDrive(player)")#startDrive 9# StartDrive
+            button(onclick="car.refuel(player)")#refuel  10# Refuel 	
+            button(onclick="car.repairCar(player)")#repairCar 11# Repair Car
+            button(onclick="car.engineOff(player)")#stopCar 12# Stop Car
+    main 
+      img(src="img/bg-none-car.jpg" alt="")#bg
+      .info 
+        p#mileage
+        p#money
+        p#bitcoin
+        p#gasolinePrice
+        p#dieselPrice
+        p#electricityPrice
+        p#bitcoinRate
+        p#gameDays
+      #indicators 
+        .indicators 
+          .fuel 
+            #indicatorScaleFuel
+              #indicatorScale-bar-fuel
+          .accum 
+            #indicatorScaleAccum
+              #indicatorScale-bar-accum
+          .engine-swear(onclick="car.repairCar(player)")  
+            #indicatorScaleEngine-swear
+              #indicatorScale-bar-EngineSwear
+        .refuel 
+          button(onclick="car.refuel(player)") 
+            img(src="img/refuel.svg", alt="")
+        
+  script(src='js/scripts.js')
+
+
+
+
