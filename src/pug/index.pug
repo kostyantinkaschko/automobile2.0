@@ -16,9 +16,6 @@ html(lang="uk")
   body
     header 
       aside 
-        .objects  
-          button(onclick="hideButtons('car', 'player')").player Player 
-          button(onclick="hideButtons('player', 'car')").car Car 
         .metodes 
           #player 
             button(onclick="player.goSleep()")#sleep 1# Sleep
@@ -29,7 +26,7 @@ html(lang="uk")
             button(onclick="player.buyCar()")#buyCar 6# Buy car
             button(onclick="player.buyMiningFarm() ")#buyMiningFarm 7# Buy mining farm
             button(onclick="player.sellBitcoin()")#sellBitcoin 8# Sell Bitcoin
-             button(onclick="player.goParty()")#sellBitcoin 9# Go Party
+              button(onclick="player.goParty()")#sellBitcoin 9# Go Party
           #car
             button(onclick="car.openCar()")#openCar 1# Open car
             button(onclick="car.closeCar()")#closeCar 2# Close car
@@ -43,6 +40,14 @@ html(lang="uk")
             button(onclick="car.refuel(player)")#refuel  10# Refuel 	
             button(onclick="car.repairCar(player)")#repairCar 11# Repair Car
             button(onclick="car.engineOff(player)")#stopCar 12# Stop Car
+          #settings 
+            button(onclick="game.saveIntervalTimeChange(player)") 1# Change save interval time
+        .objects  
+          button(onclick="hideButtons('player', 'settings', 'car')") 
+            img(src="img/settings.svg") 
+          .da
+            button(onclick="hideButtons('car', 'player', 'settings')").player Player 
+            button(onclick="hideButtons('player', 'car', 'settings')").car Car 
     main 
       img(src="img/bg-none-car.jpg" alt="")#bg
       .info 
@@ -67,8 +72,8 @@ html(lang="uk")
               #indicatorScale-bar-EngineSwear
         .refuel 
           button(onclick="car.refuel(player)") 
-            img(src="img/refuel.svg", alt="")
-        
+            img(src="img/refuel.svg" alt="")
+
   script(src='js/scripts.js')
 
 

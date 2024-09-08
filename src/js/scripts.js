@@ -1,4 +1,5 @@
-let car = false
+let car = false,
+    save = false
 
 function rand(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
@@ -43,6 +44,62 @@ function updateInfo() {
 
 
 
+class Game {
+    constructor() {
+        this.saveIntervalTime = 10000
+    }
+    gameSave() {
+        save = setInterval(event => {
+            localStorage.setItem("day", world.day)
+            localStorage.setItem("bitcoinRate", world.bitcoinRate)
+            localStorage.setItem("previousDay", world.previousDay)
+            localStorage.setItem("gasolinePrice", world.gasolinePrice)
+            localStorage.setItem("dieselPrice", world.dieselPrice)
+            localStorage.setItem("electricityPrice", world.electricityPrice)
+            localStorage.setItem("isDriving", player.isDriving)
+            localStorage.setItem("allTravelTime", player.allTravelTime)
+            localStorage.setItem("isMiningFarm", player.isMiningFarm)
+            localStorage.setItem("bitcoin", player.bitcoin)
+            localStorage.setItem("money", player.money)
+            localStorage.setItem("hasWork", player.hasWork)
+            localStorage.setItem("hasCar", player.hasCar)
+            localStorage.setItem("dayWitoutFood", player.dayWitoutFood)
+            localStorage.setItem("drunkenness", player.drunkenness)
+            localStorage.setItem("location", player.location)
+            localStorage.setItem("expectation", player.expectation)
+            localStorage.setItem("waitingForTranslitomHana", player.waitingForTranslitomHana)
+            localStorage.setItem("mark", car.mark)
+            localStorage.setItem("model", car.model)
+            localStorage.setItem("yearOfManufacture", car.yearOfManufacture)
+            localStorage.setItem("accumCapacity", car.accumCapacity)
+            localStorage.setItem("fuel", car.fuel)
+            localStorage.setItem("key", car.key)
+            localStorage.setItem("ignition", car.ignition)
+            localStorage.setItem("isEngineStart", car.isEngineStart)
+            localStorage.setItem("engineSwear", car.engineSwear)
+            localStorage.setItem("fuelConsumption100km", car.fuelConsumption100km)
+            localStorage.setItem("fuelConsumption1km", car.fuelConsumption1km)
+            localStorage.setItem("mileage", car.mileage)
+            localStorage.setItem("allmileage", car.allmileage)
+            localStorage.setItem("previousmileage", car.previousmileage)
+            localStorage.setItem("maxSpeed", car.maxSpeed)
+            localStorage.setItem("speedCoefficient", car.speedCoefficient)
+            localStorage.setItem("kmSinceLastEngineSwearUpdate", car.kmSinceLastEngineSwearUpdate)
+            localStorage.setItem("fuelTank", car.fuelTank)
+            localStorage.setItem("open", car.open)
+            console.log("Game saved!")
+        }, this.saveIntervalTime)
+    }
+    saveIntervalTimeChange() {
+        this.saveIntervalTime = parseInt(prompt("Specify the time interval after which the game will be saved in seconds.")) * 1000
+        if(isNaN(this.saveIntervalTime)){
+            this.saveIntervalTime = 10000
+        }
+        clearInterval(save)
+        this.gameSave()
+    }
+}
+
 
 class World {
     constructor() {
@@ -57,7 +114,6 @@ class World {
 
 
 
-// Додати DOM (DИO)
 class Player {
     constructor() {
         this.isDriving = false
@@ -650,7 +706,8 @@ class Car {
     }
 }
 
-let world = new World(),
+let game = new Game(),
+    world = new World(),
     player = new Player(),
     fuelScale = document.getElementById('indicatorScaleFuel')
 
@@ -734,10 +791,10 @@ function updateIndicatorEngineSwearScale() {
 }
 
 
-function hideButtons(id1, id2) {
-    let button = document.getElementById(id1)
-    let button2 = document.getElementById(id2)
-
+function hideButtons(id1, id2, id3) {
+    let button = document.getElementById(id1),
+    button2 = document.getElementById(id2)
+    button3 = document.getElementById(id3)
     if (button) {
         button.style.display = "none"
     } else {
@@ -746,6 +803,11 @@ function hideButtons(id1, id2) {
 
     if (button2) {
         button2.style.display = "flex"
+    } else {
+        console.log(`Element with ID '${id2}' not found`)
+    }
+    if (button3) {
+        button3.style.display = "none"
     } else {
         console.log(`Element with ID '${id2}' not found`)
     }
@@ -779,92 +841,55 @@ function interval() {
 interval()
 setInterval(interval, 1000)
 document.addEventListener("DOMContentLoaded", event => {
-if (localStorage.getItem("day")) {
-    world.day = localStorage.getItem("day")
-    world.bitcoinRate = localStorage.getItem("bitcoinRate")
-    world.previousDay = localStorage.getItem("previousDay")
-    world.gasolinePrice = localStorage.getItem("gasolinePrice")
-    world.dieselPrice = localStorage.getItem("dieselPrice")
-    world.electricityPrice = localStorage.getItem("electricityPrice")
-}
+    if (localStorage.getItem("day")) {
+        world.day = localStorage.getItem("day")
+        world.bitcoinRate = localStorage.getItem("bitcoinRate")
+        world.previousDay = localStorage.getItem("previousDay")
+        world.gasolinePrice = localStorage.getItem("gasolinePrice")
+        world.dieselPrice = localStorage.getItem("dieselPrice")
+        world.electricityPrice = localStorage.getItem("electricityPrice")
+    }
 
-if (localStorage.getItem("isDriving")) {
-    player.isDriving = localStorage.getItem("isDriving") === 'true'
-    player.allTravelTime = localStorage.getItem("allTravelTime")
-    player.isMiningFarm = localStorage.getItem("isMiningFarm") === 'true'
-    player.bitcoin = localStorage.getItem("bitcoin")
-    player.money = localStorage.getItem("money")
-    player.hasWork = localStorage.getItem("hasWork") === 'true'
-    player.hasCar = localStorage.getItem("hasCar") === 'true'
-    player.dayWitoutFood = localStorage.getItem("dayWitoutFood")
-    player.drunkenness = localStorage.getItem("drunkenness")
-    player.location = localStorage.getItem("location")
-    player.expectation = localStorage.getItem("expectation")
-    player.waitingForTranslitomHana = localStorage.getItem("waitingForTranslitomHana") === 'true'
-}
+    if (localStorage.getItem("isDriving")) {
+        player.isDriving = localStorage.getItem("isDriving") === 'true'
+        player.allTravelTime = localStorage.getItem("allTravelTime")
+        player.isMiningFarm = localStorage.getItem("isMiningFarm") === 'true'
+        player.bitcoin = localStorage.getItem("bitcoin")
+        player.money = localStorage.getItem("money")
+        player.hasWork = localStorage.getItem("hasWork") === 'true'
+        player.hasCar = localStorage.getItem("hasCar") === 'true'
+        player.dayWitoutFood = localStorage.getItem("dayWitoutFood")
+        player.drunkenness = localStorage.getItem("drunkenness")
+        player.location = localStorage.getItem("location")
+        player.expectation = localStorage.getItem("expectation")
+        player.waitingForTranslitomHana = localStorage.getItem("waitingForTranslitomHana") === 'true'
+    }
 
-if (localStorage.getItem("mark")) {
-    car.mark = localStorage.getItem("mark")
-    car.model = localStorage.getItem("model")
-    car.yearOfManufacture = localStorage.getItem("yearOfManufacture")
-    car.accumCapacity = localStorage.getItem("accumCapacity")
-    car.fuel = localStorage.getItem("fuel")
-    car.key = localStorage.getItem("key") === 'true'
-    car.ignition = localStorage.getItem("ignition") === 'true'
-    car.isEngineStart = localStorage.getItem("isEngineStart") === 'true'
-    car.engineSwear = localStorage.getItem("engineSwear")
-    car.fuelConsumption100km = localStorage.getItem("fuelConsumption100km")
-    car.fuelConsumption1km = localStorage.getItem("fuelConsumption1km")
-    car.mileage = localStorage.getItem("mileage")
-    car.allmileage = localStorage.getItem("allmileage")
-    car.previousmileage = localStorage.getItem("previousmileage")
-    car.maxSpeed = localStorage.getItem("maxSpeed")
-    car.speedCoefficient = localStorage.getItem("speedCoefficient")
-    car.kmSinceLastEngineSwearUpdate = localStorage.getItem("kmSinceLastEngineSwearUpdate")
-    car.fuelTank = localStorage.getItem("fuelTank")
-    car.open = localStorage.getItem("open") === 'true'
-}})
+    if (localStorage.getItem("mark")) {
+        car.mark = localStorage.getItem("mark")
+        car.model = localStorage.getItem("model")
+        car.yearOfManufacture = localStorage.getItem("yearOfManufacture")
+        car.accumCapacity = localStorage.getItem("accumCapacity")
+        car.fuel = localStorage.getItem("fuel")
+        car.key = localStorage.getItem("key") === 'true'
+        car.ignition = localStorage.getItem("ignition") === 'true'
+        car.isEngineStart = localStorage.getItem("isEngineStart") === 'true'
+        car.engineSwear = localStorage.getItem("engineSwear")
+        car.fuelConsumption100km = localStorage.getItem("fuelConsumption100km")
+        car.fuelConsumption1km = localStorage.getItem("fuelConsumption1km")
+        car.mileage = localStorage.getItem("mileage")
+        car.allmileage = localStorage.getItem("allmileage")
+        car.previousmileage = localStorage.getItem("previousmileage")
+        car.maxSpeed = localStorage.getItem("maxSpeed")
+        car.speedCoefficient = localStorage.getItem("speedCoefficient")
+        car.kmSinceLastEngineSwearUpdate = localStorage.getItem("kmSinceLastEngineSwearUpdate")
+        car.fuelTank = localStorage.getItem("fuelTank")
+        car.open = localStorage.getItem("open") === 'true'
+    }
+})
 
-let save = setInterval(event => {
-    localStorage.setItem("day", world.day)
-    localStorage.setItem("bitcoinRate", world.bitcoinRate)
-    localStorage.setItem("previousDay", world.previousDay)
-    localStorage.setItem("gasolinePrice", world.gasolinePrice)
-    localStorage.setItem("dieselPrice", world.dieselPrice)
-    localStorage.setItem("electricityPrice", world.electricityPrice)
-    localStorage.setItem("isDriving", player.isDriving)
-    localStorage.setItem("allTravelTime", player.allTravelTime)
-    localStorage.setItem("isMiningFarm", player.isMiningFarm)
-    localStorage.setItem("bitcoin", player.bitcoin)
-    localStorage.setItem("money", player.money)
-    localStorage.setItem("hasWork", player.hasWork)
-    localStorage.setItem("hasCar", player.hasCar)
-    localStorage.setItem("dayWitoutFood", player.dayWitoutFood)
-    localStorage.setItem("drunkenness", player.drunkenness)
-    localStorage.setItem("location", player.location)
-    localStorage.setItem("expectation", player.expectation)
-    localStorage.setItem("waitingForTranslitomHana", player.waitingForTranslitomHana)
-    localStorage.setItem("mark", car.mark)
-    localStorage.setItem("model", car.model)
-    localStorage.setItem("yearOfManufacture", car.yearOfManufacture)
-    localStorage.setItem("accumCapacity", car.accumCapacity)
-    localStorage.setItem("fuel", car.fuel)
-    localStorage.setItem("key", car.key)
-    localStorage.setItem("ignition", car.ignition)
-    localStorage.setItem("isEngineStart", car.isEngineStart)
-    localStorage.setItem("engineSwear", car.engineSwear)
-    localStorage.setItem("fuelConsumption100km", car.fuelConsumption100km)
-    localStorage.setItem("fuelConsumption1km", car.fuelConsumption1km)
-    localStorage.setItem("mileage", car.mileage)
-    localStorage.setItem("allmileage", car.allmileage)
-    localStorage.setItem("previousmileage", car.previousmileage)
-    localStorage.setItem("maxSpeed", car.maxSpeed)
-    localStorage.setItem("speedCoefficient", car.speedCoefficient)
-    localStorage.setItem("kmSinceLastEngineSwearUpdate", car.kmSinceLastEngineSwearUpdate)
-    localStorage.setItem("fuelTank", car.fuelTank)
-    localStorage.setItem("open", car.open)
-    console.log("Game saved!")
-}, 10000)
+game.gameSave()
+
 
 
 
@@ -874,6 +899,7 @@ let save = setInterval(event => {
 // Робота: зарплата, можливість пошуку іншої роботи. Додати текст, при помилках тобі будуть угражати дубінкою і звільненням з роботи.
 // Автоматично день не закінчується, а просто функції блокуються поки день не закінчиться
 // Прокачка машинки
+// Додати налаштування
 
 
 

@@ -21,6 +21,7 @@ header
             border-color: #fff
             background-color: #fff
             color: #000
+    aside
     #player,
     #car
         display: none
@@ -30,11 +31,10 @@ header
     #car.active
         display: flex
 
-    #car
+    #car,
+    #settings
         display: none
     .objects
-        display: flex
-        justify-content: space-between
 
 main
     display: flex
@@ -163,3 +163,18 @@ main
 .engine-sweare
     height: 246px
 
+#settings
+    display: flex
+    flex-direction: column
+
+.objects
+    display: flex
+
+.da
+    display: flex
+    flex-direction: column-reverse
+    align-items: flex-start
+
+
+.metodes
+    height: 628px
