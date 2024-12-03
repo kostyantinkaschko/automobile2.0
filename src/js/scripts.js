@@ -92,7 +92,7 @@ class Game {
     }
     saveIntervalTimeChange() {
         this.saveIntervalTime = parseInt(prompt("Specify the time interval after which the game will be saved in seconds.")) * 1000
-        if(isNaN(this.saveIntervalTime)){
+        if (isNaN(this.saveIntervalTime)) {
             this.saveIntervalTime = 10000
         }
         clearInterval(save)
@@ -367,7 +367,7 @@ class Player {
             if (this.money > 45000 && !this.isDriving) {
                 this.hasCar = true
                 this.money -= 45000
-                car = new Car("Mazda", "Rx-7")
+                car = new CarRotorEngine("Mazda", "Rx-7")
                 console.log(car)
                 alert("You bought a car.")
             } else if (this.money < 45000) {
@@ -425,30 +425,204 @@ class Player {
         }
     }
 }
-
-class Car {
+class CarRotorEngine {
     constructor(mark, model) {
         this.mark = mark
         this.model = model
         this.yearOfManufacture = 2001
-        this.accumCapacity = 60
-        this.fuelType = "gasoline"
-        this.fuel = 10
-        this.key = false
-        this.ignition = false
-        this.isEngineStart = false
-        this.engineSwear = 0
-        this.fuelConsumption100km = 12
-        this.fuelConsumption1km = 0.123
         this.mileage = 0
-        this.allmileage = 0
-        this.previousmileage = this.allmileage
+        this.allMileage = 0
+        this.previousMileage = this.allMileage
         this.maxSpeed = 257
         this.speedCoefficient = 0
-        this.kmSinceLastEngineSwearUpdate
-        this.fuelTank = 30
+        this.kmSinceLastEngineSwearUpdate = 0
         this.open = false
-        player.expectation = true
+        this.key = false
+        this.ignition = false
+        this.weightKg = 1260
+        this.expectation = true
+    }
+
+    static Body = class {
+        constructor() {
+            this.steeringWheelAttachment = [
+                {
+                    rudder: true,
+                    wiperButton: true,
+                    leftTurnSignalButton: true,
+                    rightTurnSignalButton: true,
+                },
+            ]
+            this.torpedo = [
+                {
+                    speedometer: true,
+                    tachometer: true,
+                    fuelIndicator: true,
+                    temperatureIndicator: true,
+                    climateControl: true,
+                    hazardLightButton: true,
+                    tapeRecorder: true,
+                },
+            ]
+        }
+    }
+
+    static Engine = class {
+        constructor() {
+            this.engineSwear = 0
+            this.fuelType = "gasoline"
+            this.accumCapacity = 60
+            this.isEngineStart = false
+            this.rotors = [
+                [{ partCondition: 100, rotorVolume: 0.65 }],
+                [{ partCondition: 100, rotorVolume: 0.65 }],
+            ]
+            this.rotorChambers = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.centralHull = [[{ partCondition: 100 }]]
+            this.eccentricShaft = [[{ partCondition: 100 }]]
+            this.fuelConsumption100km = 12
+            this.fuelConsumption1km = 0.12
+            this.turbocharger = [[{ partCondition: 100 }]]
+            this.intercooler = false
+            this.engineVolume = 1.3
+            this.powerFactor = ((100 - this.engineSwear + 1) / 2) + 20
+            this.power = this.powerFactor * this.engineVolume
+            this.generator = [[{ partCondition: 100 }]]
+            this.kroshtein = [[{ partCondition: 100 }]]
+            this.driveBolt = [[{ partCondition: 100 }]]
+            this.throttle = [[{ partCondition: 100 }]]
+            this.timingCover = [[{ partCondition: 100 }]]
+            this.fuelRamp = [[{ partCondition: 100 }]]
+            this.inletManifold = [[{ partCondition: 100 }]]
+            this.ignitionWires = [[{ partCondition: 100 }]]
+            this.sparkPlugs = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.crankshaftCounterweight = [[{ partCondition: 100 }]]
+            this.timingChainGear = [[{ partCondition: 100 }]]
+            this.oilFilter = [{ partCondition: 100 }]
+            this.tensionRoller = [
+                [{ partCondition: 100, type: "A" }],
+                [{ partCondition: 100, type: "B" }],
+            ]
+            this.bracket = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.radiatorHousingFan = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.radiator = [[{ partCondition: 100 }]]
+            this.radiatorVentilationHousing = [[{ partCondition: 100 }]]
+            this.airFilterCover = [[{ partCondition: 100 }]]
+            this.airFilterBase = [[{ partCondition: 100 }]]
+            this.oilPan = [[{ partCondition: 100 }]]
+            this.powerSteeringPump = [[{ partCondition: 100 }]]
+        }
+    }
+
+    static Tanker = class {
+        constructor() {
+            this.maxFuelTank = 76
+            this.fuel = 30
+            this.fuelPump = [[{ partCondition: 100 }]]
+            this.filledFuelType = "gasoline"
+        }
+    }
+
+    static Transmission = class {
+        constructor() {
+            this.flywheel = [{ partCondition: 100 }]
+            this.clutchDisc = [{ partCondition: 100 }]
+            this.gearbox = [{ partCondition: 100 }]
+        }
+    }
+
+    static Chassis = class {
+        constructor() {
+            this.frontStabilizer = [[{ partCondition: 100 }]]
+            this.frontSubframe = [[{ partCondition: 100, silentBlockCondition: 100 }]]
+            this.frontLowerSuspensionArm = [
+                [{ partCondition: 100, silentBlockCondition: 100 }],
+                [{ partCondition: 100, silentBlockCondition: 100 }],
+            ]
+            this.rotaryKnuckle = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.steeringTieRodTip = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.steeringLinkage = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.steeringRack = [[{ partCondition: 100 }]]
+            this.frontBrakeShield = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.ventilatedBrakeDisc = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.discBrakePads = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.support = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.wheel = [
+                [{ shineCondition: 100, discCondition: 100 }],
+                [{ shineCondition: 100, discCondition: 100 }],
+                [{ shineCondition: 100, discCondition: 100 }],
+                [{ shineCondition: 100, discCondition: 100 }],
+            ]
+            this.rearSubframe = [[{ partCondition: 100, silentBlockCondition: 100 }]]
+            this.rearSwingArm = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.upperRearSuspensionArm = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.lowerRearSuspensionArm = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+            this.drivePTOShaft = [[{ partCondition: 100 }]]
+            this.rearStabilizer = [[{ partCondition: 100 }]]
+            this.rearWheelDrive = [
+                [{ partCondition: 100 }],
+                [{ partCondition: 100 }],
+            ]
+        }
+    }
+
+    static ExhaustSystem = class {
+        constructor() {
+            this.frontPartOfTheExhaustSystem = [{ partCondition: 100 }]
+            this.catalyticConverter = [{ partCondition: 100 }]
+            this.middleMuffler = [{ partCondition: 100 }]
+            this.exhaustPipe = [{ partCondition: 100 }]
+        }
     }
     ignitionOn(player) {
         if (player.hasCar && !player.isDriving && player.location === "car") {
@@ -483,15 +657,15 @@ class Car {
                 }
             }
 
-            if (maxSpeed > this.maxSpeed - 43) {
-                alert("You burned the engine.")
-                player.hasCar = false
-                this.engineSwear = 100
-                this.isEngineStart = false
-                this.ignition = false
-                this.accumCapacity = 0
-                return
-            }
+            // if (maxSpeed > this.maxSpeed - 43) {
+            //     alert("You burned the engine.")
+            //     player.hasCar = false
+            //     this.engineSwear = 100
+            //     this.isEngineStart = false
+            //     this.ignition = false
+            //     this.accumCapacity = 0
+            //     return
+            // }
 
 
             if (maxSpeed && player.hasCar && this.isEngineStart) {
@@ -793,7 +967,7 @@ function updateIndicatorEngineSwearScale() {
 
 function hideButtons(id1, id2, id3) {
     let button = document.getElementById(id1),
-    button2 = document.getElementById(id2)
+        button2 = document.getElementById(id2)
     button3 = document.getElementById(id3)
     if (button) {
         button.style.display = "none"
@@ -893,7 +1067,7 @@ game.gameSave()
 
 
 
-// Ідеї: 
+// Ідеї:
 // ПОступове з'явлення кнопок
 // Розположити статистику належним чином
 // Робота: зарплата, можливість пошуку іншої роботи. Додати текст, при помилках тобі будуть угражати дубінкою і звільненням з роботи.
@@ -949,7 +1123,7 @@ game.gameSave()
 //         this.waitingForTranslitomHana -= 1
 //         if (this.waitingForTranslitomHana <= 0) {
 //             car = false
-//             alert("The police called today and said that your car was not found and the thief was caught dead. You need to buy a new car")
+//             alert("The police called today and said that your car was not found and the thief was caught dead. You need to buy a CarRotorEngine")
 //         }
 //     } else if (player.expectation) {
 //         player.expectation -= 1
@@ -993,7 +1167,7 @@ game.gameSave()
 //         this.mainCameraFeatures = ["Autofocus", "Flash", "Support 4K shooting", "Stabilization", "Telephoto lens", "Ultra wide angle lens"]
 //         this.numbersOfMainCameras = 3
 //         this.mainCameraVideoRecording = ["4K / 3840x2160", "stereo sound"]
-//         this.additionalyMainCamera = ["48MP Main: 24mm, ƒ/1.78 aperture, second-generation sensor-shift OIS, 100% focus pixels, support for ultra-high-resolution photos (24MP and 48MP)", "12MP Ultra Wide: 13mm, ƒ/2.2 aperture and 120° field of view, 100% focus pixels", "12MP 2x Telephoto: 48mm, ƒ/1.78 aperture, second-generation sensor-shift OIS, 100% focus pixels, quad-pixel sensor", "12MP 5x Telephoto: 120mm, ƒ/2.8 aperture, OIS", "5x optical zoom; 2x optical zoom; 10x optical zoom range", "Digital zoom up to 25x", "Custom default lens (primary) / Sapphire crystal lens cover / True Tone adaptive flash / Photonic Engine / Deep synthesis / Smart HDR 5 / Next-generation portraits with Focus Assist and Depth Control / Portrait Lighting with six effects / Night mode portraits with LiDAR Scanner / Panorama (up to 63MP) / Photo Styles / Macro photography / Apple ProRAW / Wide color capture for photos and Live Photos / Lens correction (Ultra Wide) / Advanced red-eye correction / Automatic image stabilization / Burst mode / Geo-tagging of photos / HEIF, JPEG, and DNG image formats", "4K video recording at 24 fps, 25 fps, 30 fps, or 60 fps", "1080p HD video recording at 25, 30, or 60 fps", "720p HD video recording at 30 fps", "Cinematic mode up to 4K HDR at 30 fps", "Action mode up to 2.8K at 60 fps", "4K HDR video recording with Dolby Vision at 60 fps", "ProRes video recording up to 4K at 60 fps with external recording", "Video log", "Academy color encoding", "Macro video recording, including slow motion and time-lapse", "1080p slow motion video at 120 or 240 fps", "Time-lapse video with stabilization", "Night mode Time-lapse", "QuickTake Video", "Second-generation sensor-shift optical image stabilization for video (main)", "3D sensor-shift optical image stabilization with autofocus for video (telephoto)", "Digital zoom up to 15x (iPhone 15 Pro Max)", "Audio zoom", "True Tone flash", "Cinematic video stabilization (4K, 1080p, and 720p)", "Continuous video with autofocus", "Take 8-megapixel photos while recording 4K video", "Playback zoom", "Recorded video formats: HEVC, H.264 and ProRes", "Stereo recording"]
+//         this.additionalyMainCamera = ["48MP Main: 24mm, ƒ/1.78 aperture, second-generation sensor-shift OIS, 100% focus pixels, support for ultra-high-resolution photos (24MP and 48MP)", "12MP Ultra Wide: 13mm, ƒ/2.2 aperture and 120° field of view, 100% focus pixels", "12MP 2x Telephoto: 48mm, ƒ/1.78 aperture, second-generation sensor-shift OIS, 100% focus pixels, quad-pixel sensor", "12MP 5x Telephoto: 120mm, ƒ/2.8 aperture, OIS", "5x optical zoom 2x optical zoom 10x optical zoom range", "Digital zoom up to 25x", "Custom default lens (primary) / Sapphire crystal lens cover / True Tone adaptive flash / Photonic Engine / Deep synthesis / Smart HDR 5 / Next-generation portraits with Focus Assist and Depth Control / Portrait Lighting with six effects / Night mode portraits with LiDAR Scanner / Panorama (up to 63MP) / Photo Styles / Macro photography / Apple ProRAW / Wide color capture for photos and Live Photos / Lens correction (Ultra Wide) / Advanced red-eye correction / Automatic image stabilization / Burst mode / Geo-tagging of photos / HEIF, JPEG, and DNG image formats", "4K video recording at 24 fps, 25 fps, 30 fps, or 60 fps", "1080p HD video recording at 25, 30, or 60 fps", "720p HD video recording at 30 fps", "Cinematic mode up to 4K HDR at 30 fps", "Action mode up to 2.8K at 60 fps", "4K HDR video recording with Dolby Vision at 60 fps", "ProRes video recording up to 4K at 60 fps with external recording", "Video log", "Academy color encoding", "Macro video recording, including slow motion and time-lapse", "1080p slow motion video at 120 or 240 fps", "Time-lapse video with stabilization", "Night mode Time-lapse", "QuickTake Video", "Second-generation sensor-shift optical image stabilization for video (main)", "3D sensor-shift optical image stabilization with autofocus for video (telephoto)", "Digital zoom up to 15x (iPhone 15 Pro Max)", "Audio zoom", "True Tone flash", "Cinematic video stabilization (4K, 1080p, and 720p)", "Continuous video with autofocus", "Take 8-megapixel photos while recording 4K video", "Playback zoom", "Recorded video formats: HEVC, H.264 and ProRes", "Stereo recording"]
 //     }
 //     police() {
 //         if (player.hasCar && !car.carStole) {
